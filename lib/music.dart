@@ -18,15 +18,67 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MusicPlayer extends StatelessWidget {
-  static const platform = MethodChannel('audio_player');
+class MusicPlayer extends StatefulWidget {
+  @override
+  _MusicPlayerState createState() => _MusicPlayerState();
+}
 
-  Future<void> _playPause() async {
+class _MusicPlayerState extends State<MusicPlayer> {
+  static const platform = MethodChannel('audio_player');
+  String _mood = '';
+
+  Future<void> _playMusic(String mood) async {
     try {
-      await platform.invokeMethod('playPause');
+      await platform.invokeMethod('playMusic', {'mood': mood});
     } on PlatformException catch (e) {
-      print("Failed to play/pause audio: '${e.message}'.");
+      print("Failed to play music: '${e.message}'.");
     }
+  }
+
+  Future<void> _showMoodDialog() async {
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Select Your Mood'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    _mood = 'Happy';
+                    Navigator.pop(context);
+                    _playMusic(_mood);
+                  });
+                },
+                child: Text('Happy'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    _mood = 'Sad';
+                    Navigator.pop(context);
+                    _playMusic(_mood);
+                  });
+                },
+                child: Text('Sad'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    _mood = 'Anxious';
+                    Navigator.pop(context);
+                    _playMusic(_mood);
+                  });
+                },
+                child: Text('Anxious'),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -44,10 +96,9 @@ class MusicPlayer extends StatelessWidget {
               style: TextStyle(fontSize: 24.0),
             ),
             SizedBox(height: 20.0),
-            IconButton(
-              icon: Icon(Icons.play_arrow),
-              iconSize: 48.0,
-              onPressed: _playPause,
+            ElevatedButton(
+              onPressed: _showMoodDialog,
+              child: Text('Select Mood'),
             ),
           ],
         ),
