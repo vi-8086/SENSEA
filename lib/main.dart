@@ -4,7 +4,6 @@ import 'package:sensea/screens/journal.dart';
 import 'package:sensea/screens/habit tracker.dart'; 
 import 'package:sensea/screens/counsel.dart'; 
 
-
 void main() {
   runApp(MyApp());
 }
@@ -24,8 +23,10 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
+        title: Text(''),
+        backgroundColor: Colors.brown[200], // Setting app bar color to beige
       ),
+      backgroundColor: Colors.brown[100], // Changing background color to beige
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -33,7 +34,11 @@ class HomePage extends StatelessWidget {
             padding: const EdgeInsets.all(16.0),
             child: Text(
               'Hi User',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 24, 
+                fontWeight: FontWeight.bold,
+                color: Colors.brown[800], // Making "Hi User" text brown
+              ),
             ),
           ),
           Expanded(
@@ -56,30 +61,14 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          FloatingActionButton(
-            onPressed: () {
-              // Navigate to home screen
-            },
-            child: Icon(Icons.home),
-          ),
-          SizedBox(width: 16),
-          FloatingActionButton(
-            onPressed: () {
-              // Navigate to profile screen
-            },
-            child: Icon(Icons.person),
-          ),
-        ],
-      ),
+      
     );
   }
 
   Widget _buildCard(BuildContext context, String title, Widget page) {
     return Card(
       elevation: 5.0,
+      color: Colors.brown[300], // Setting card color to beige
       child: InkWell(
         onTap: () {
           // Navigate to respective functionality screen
@@ -88,13 +77,17 @@ class HomePage extends StatelessWidget {
             MaterialPageRoute(builder: (context) => page),
           );
         },
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Text(
-            title,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16.0,
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              title,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16.0,
+                fontFamily: 'Quirky', // Setting font family to a quirky sans serif font
+                color: Colors.brown[50], // Setting font color to complementary beige
+              ),
             ),
           ),
         ),
